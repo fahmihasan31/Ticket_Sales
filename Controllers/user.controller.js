@@ -41,7 +41,6 @@ exports.findUser = async (request, response) => {
 
 /** create function for add new user */
 exports.addUser = (request, response) => {
-  /** prepare data from request */
   let newUser = {
     firstname: request.body.firstname,
     lastname: request.body.lastname,
@@ -70,7 +69,6 @@ exports.addUser = (request, response) => {
 
 /** create function for update user */
 exports.updateUser = (request, response) => {
-  /** prepare data that has been changed */
   let dataUser = {
     firstname: request.body.firstname,
     lastname: request.body.lastname,
@@ -115,6 +113,72 @@ exports.deleteUser = (request, response) => {
     })
     .catch(error => {
       /** if update's process fail */
+      return response.json({
+        success: false,
+        message: error.message
+      })
+    })
+}
+
+//Registrasi
+exports.Registerasi = (request, response) => {
+  // Check if the email alaready exists
+  userModel.findOne({ where: { email: request.body.email } })
+    .then(existingUser => {
+      if (existingUser) {
+        return response.status(400).json({
+          success: false,
+          message: 'Email is already registered'
+        });
+      } else {
+        // If email is not registered, proceed with registration
+        let newUser = {
+          firstname: request.body.firstname,
+          lastname: request.body.lastname,
+          email: request.body.email,
+          password: md5(request.body.password),
+          role: "user"
+        };
+
+        userModel.create(newUser)
+          .then(result => {
+            return response.json({
+              success: true,
+              data: result,
+              message: `Registration has been inserted`
+            });
+          })
+          .catch(error => {
+            return response.status(500).json({
+              success: false,
+              message: error.message
+            });
+          });
+      }
+    })
+    .catch(error => {
+      return response.status(500).json({
+        success: false,
+        message: error.message
+      });
+    });
+};
+
+// Reset Password
+exports.resetPass = (request, response) => {
+  let dataUser = {
+    password: md5("moklet")
+  }
+  let userID = request.params.id
+
+  userModel.update(dataUser, { where: { userID: userID } })
+    .then(result => {
+      return response.json({
+        success: true,
+        message: `Password has been reset : moklet`
+      })
+    })
+    .catch(error => {
       return response.json({
         success: false,
         message: error.message

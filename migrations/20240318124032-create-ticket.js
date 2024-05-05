@@ -13,24 +13,24 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "events",
-          key: "eventID"
+          model: 'events',
+          key: 'eventID'
         }
       },
       userID: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "users",
-          key: "userID"
+          model: 'users',
+          key: 'userID'
         }
       },
       seatID: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "seats",
-          key: "seatID"
+          model: 'seats',
+          key: 'seatID'
         }
       },
       bookedDate: {

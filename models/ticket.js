@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.user, { foreignKey: 'userID' })
-      this.belongsTo(models.event, { foreignKey: 'eventID' })
-      this.belongsTo(models.seat, { foreignKey: 'seatID' })
+      this.belongsTo(models.user, { foreignKey: 'userID' });
+      this.belongsTo(models.event, { foreignKey: 'eventID' });
+      this.belongsTo(models.seat, { foreignKey: 'seatID' });
     }
   }
   ticket.init({
