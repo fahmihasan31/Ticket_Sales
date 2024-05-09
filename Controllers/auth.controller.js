@@ -1,8 +1,7 @@
-const userModel = require(`../models/index`).user
 const md5 = require(`md5`)
-const jwt = require('jsonwebtoken');
-const secret = 'your_secret_key_here'; // Ganti dengan secret yang benar
-
+const jwt = require(`jsonwebtoken`)
+const userModel = require(`../models/index`).user
+const secret = `mokleters`
 
 const authenticate = async (request, response) => {
   let dataLogin = {
@@ -33,41 +32,26 @@ const authenticate = async (request, response) => {
 }
 const authorize = (request, response, next) => {
   const authHeader = request.headers.authorization;
-  if (!authHeader) {
-    return response.status(401).json({
-      success: false,
-      auth: false,
-      message: 'Authorization header is missing'
-    });
-  }
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
 
-  const token = authHeader.split(' ')[1];
-  if (!token) {
-    return response.status(401).json({
-      success: false,
-      auth: false,
-      message: 'Token is missing'
-    });
-  }
-
-  try {
-    const verifiedUser = jwt.verify(token, secret);
+    let verifiedUser = jwt.verify(token, secret);
     if (!verifiedUser) {
-      return response.status(401).json({
+      return response.json({
         success: false,
         auth: false,
-        message: 'Invalid token'
-      });
+        message: `User Unauthorized`
+      })
     }
 
     request.user = verifiedUser;
     next();
-  } catch (error) {
-    return response.status(401).json({
+  } else {
+    return response.json({
       success: false,
       auth: false,
-      message: 'Failed to authenticate token'
-    });
+      message: `User Unauthorized`
+    })
   }
 }
 module.exports = { authenticate, authorize }

@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 
 //auth
 const auth = require(`./Routes/auth.route`)
-app.use(`/auth`, auth)
+app.use(`/login`, auth)
 
 //user
 const userRoute = require('./Routes/user.route');
@@ -21,6 +21,7 @@ app.use('/user', userRoute);
 //event
 const eventRoute = require('./Routes/event.route');
 app.use('/event', eventRoute);
+
 /** route to access uploaded file */
 app.use(express.static(__dirname))
 

@@ -41,7 +41,7 @@ exports.addEvent = (request, response) => {
       return response.json({ message: error })
     }
     if (!request.file) {
-      return response.json({ message: `Nothing to Upload` })
+      return response.json({ message: `Image not to Upload` })
     }
 
     let newEvent = {

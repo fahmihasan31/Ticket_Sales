@@ -167,7 +167,7 @@ exports.Registerasi = (request, response) => {
 // Reset Password
 exports.resetPass = (request, response) => {
   let dataUser = {
-    password: md5("moklet")
+    password: md5("11rpl8")
   }
   let userID = request.params.id
 
@@ -175,7 +175,7 @@ exports.resetPass = (request, response) => {
     .then(result => {
       return response.json({
         success: true,
-        message: `Password has been reset : moklet`
+        message: `Password has been reset : 11rpl8`
       })
     })
     .catch(error => {
